@@ -184,11 +184,17 @@ TEST_CASE("Final scores for first 8 Fibonacci numbers", "[fibonacci8]")
 
 TEST_CASE("Test absorption of green box", "[green]")
 {
-	
+        auto green_box = Box::makeGreenBox(0.0);
+	REQUIRE(green_box->absorbWeightAndCalculateScore(1.0) == 1.0);	// Absorbing first token
+	REQUIRE(green_box->absorbWeightAndCalculateScore(2.0) == 2.25); // Absorbing second token
+	REQUIRE(green_box->absorbWeightAndCalculateScore(3.0) == 4.0);	// Absorbing third token
 }
 
 TEST_CASE("Test absorption of blue box", "[blue]")
 {
-
+	auto blue_box = Box::makeBlueBox(0.0);
+	REQUIRE(blue_box->absorbWeightAndCalculateScore(0.2) == 0.48);	// Absorbing first token
+	REQUIRE(blue_box->absorbWeightAndCalculateScore(1.3) == 3.175); // Absorbing second token
+	REQUIRE(blue_box->absorbWeightAndCalculateScore(1.5) == 3.795); // Absorbing third token
 }
 #endif
