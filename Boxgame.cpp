@@ -124,7 +124,16 @@ class Player
       public:
 	void takeTurn(uint32_t input_weight, const std::vector<std::unique_ptr<Box>> &boxes)
 	{
-		// TODO-
+		// TODO-DONE
+		// find smaller weight box
+		auto itMin = boxes.begin();
+		for (auto it = boxes.begin(); it != boxes.end(); it++) {
+			if (*(*it) < *(*itMin)) {
+				itMin = it;
+			}
+		}
+		score_ += (*itMin)->absorbWeightAndCalculateScore(
+			double(input_weight)); // accumulating player's score
 	}
 	double getScore() const
 	{
