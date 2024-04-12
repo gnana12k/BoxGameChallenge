@@ -39,9 +39,62 @@ class Box
 	{
 		return weight_ < rhs.weight_;
 	}
+        // TODO- DONE
+	double absorbWeightAndCalculateScore(double weight)
+	{
+		double score = 0.0;
+		if (color == Color::GREEN) // Green's absorption
+		{
+			double totalWeight;
+			if (inputWeightList.size() == 0) {
+				score = weight * weight;
+				inputWeightList.push_back(weight);
+			} else {
+				inputWeightList.push_back(weight);
+				int count = static_cast<int>(inputWeightList.size());
 
+				/*if count is less than 3, retain the same value in count, if not
+			    get the last 3 elements of vector */
+				if (count > 3) {
+					count = 3;
+				}
+				for (int i = inputWeightList.size() - 1;
+				     i >=
+				     std::max(0, static_cast<int>(inputWeightList.size()) - count);
+				     --i) {
+					totalWeight += inputWeightList[i];
+				}
+				double mean = totalWeight / count;
+				score = mean * mean;
+			}
+		} else // Blue's absorption
+		{
+			double smallest = INT_MAX;
+			double largest = INT_MIN;
+			if (inputWeightList.size() == 0) // absorbing very first token
+			{
+				smallest = largest = weight;
+				inputWeightList.push_back(weight);
+			} else {
+				inputWeightList.push_back(weight);
+				/*get the min weight from the vector*/
+				for (int i = 0; i < inputWeightList.size(); i++) {
+					smallest = std::min(
+						smallest, static_cast<double>(inputWeightList[i]));
+				}
+				/*get the max weight from the vector*/
+				for (int i = 0; i < inputWeightList.size(); i++) {
+					largest = std::max(largest,
+							   static_cast<double>(inputWeightList[i]));
+				}
+			}
+			score = ((smallest + largest) * (smallest + largest + 1) / 2) +
+				largest; // Cantor's pairing function - pair(smallest,largest)
+		}
+		weight_ += weight;
+		return score;
+	}
 	void setColor(Color c);
-
       protected:
 	double weight_;
 	Color color; // Enum for differentating between boxes
