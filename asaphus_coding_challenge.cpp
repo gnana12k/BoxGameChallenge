@@ -1,7 +1,7 @@
 /****************************************************************************
  * File Details
  * ------------
- * File Name: box_game.cpp
+ * File Name: asaphus_coding_challenge.cpp
  ****************************************************************************
  *
  *  File Description : This file  contains the mechanics of a simple game
